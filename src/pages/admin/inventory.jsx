@@ -65,7 +65,7 @@ export function Inventory() {
         let data = await response.json();
 
         if (data.status) {
-            getMemberList();
+            // getMemberList();
         }
         window.alert(data.msg);
     }

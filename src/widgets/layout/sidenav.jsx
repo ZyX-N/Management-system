@@ -22,7 +22,7 @@ export function Sidenav({ routes }) {
 
   useMemo(() => {
     if (searchTerm.length > 1) {
-      getStocksList(searchTerm)
+      // getStocksList(searchTerm)
     }
   }, [searchTerm]);
 
