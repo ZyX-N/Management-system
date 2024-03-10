@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Drawer,
+  Button,
   Typography,
   IconButton,
   List,
@@ -9,41 +10,22 @@ import {
   ListItemSuffix,
   Chip,
 } from "@material-tailwind/react";
-
-import { useContextController } from "../../context";
-
-export function Sidenav({ routes }) {
-      
-  const closeDrawer = () => setSidenavOpen(false);
-
-
-  const { sidenavOpen, setSidenavOpen } = useContextController();
-
-
-  const sidenavTypes = {
-    dark: "bg-gradient-to-br from-gray-800 to-gray-900",
-    white: "bg-white shadow-sm",
-    transparent: "bg-transparent",
-  };
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 960) {
-      setSidenavOpen(true);
-    }
-  });
-
+ 
+export function Sidenav() {
+    
+  const [open, setOpen] = React.useState(false);
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
+ 
   return (
-    <aside
-      className={`${sidenavTypes['white']} ${sidenavOpen ? "translate-x-0" : "-translate-x-80"
-        } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
-    >
-
-      <Drawer open={sidenavOpen} onClose={closeDrawer}>
+    <React.Fragment>
+      <Button onClick={openDrawer}>Open Drawer</Button>
+      <Drawer open={open} onClose={closeDrawer}>
         <div className="mb-2 flex items-center justify-between p-4">
           <Typography variant="h5" color="blue-gray">
             Material Tailwind
           </Typography>
-          <IconButton variant="text" color="blue-gray" onClick={closeDrawer} className="lg:hidden block">
+          <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -155,48 +137,10 @@ export function Sidenav({ routes }) {
             Tables
           </ListItem>
         </List>
-        {/* <Button className="mt-3 ml-5" size="sm">
+        <Button className="mt-3 ml-5" size="sm">
           Documentation
-        </Button> */}
+        </Button>
       </Drawer>
- 
-   
-      {/* <div
-        className={`relative`}
-      >
-        <Link to="/" className="py-6 px-8 text-center">
-          <Typography
-            variant="h6"
-            // color={sidenavType === "dark" ? "white" : "blue-gray"}
-            color={"blue-gray"}
-          >
-            {"Admin"}
-          </Typography>
-        </Link>
-
-        <IconButton
-          variant="text"
-          color="white"
-          size="sm"
-          ripple={false}
-          className="absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
-          onClick={() => setSidenavOpen(false)}
-        >
-          <XMarkIcon strokeWidth={2.5} className="h-5 w-5 text-black" />
-        </IconButton>
-      </div>
-
-      <div className="mx-4 flex flex-col gap-1.5 h-[calc(100%-80px)]">
-        {routes.pages.map((item) => (
-          <div className="w-full h-10 text-white bg-indigo-500 hover:bg-indigo-600 rounded-md cursor-pointer" key={item.name}>
-            <Link to={"/" + routes.layout + item.path} className="w-full h-full flex justify-center items-center capitalize">{item.name}</Link>
-          </div>
-        ))
-        }
-      </div> */}
-
-    </aside>
+    </React.Fragment>
   );
 }
-
-export default Sidenav;
