@@ -1,6 +1,8 @@
 import {
   HomeIcon,
   ChartBarIcon,
+  UserIcon,
+  HomeModernIcon,
 } from "@heroicons/react/24/solid";
 import { Dashboard, Inventory, Member, Role, SignIn } from "./pages/admin";
 
@@ -27,14 +29,14 @@ export const routes = [
         element: <Role />,
       },
       {
-        icon: <ChartBarIcon {...icon} />,
+        icon: <UserIcon {...icon} />,
         name: "member",
         path: "/member",
         subPages: false,
         element: <Member />,
       },
       {
-        icon: <ChartBarIcon {...icon} />,
+        icon: <HomeModernIcon {...icon} />,
         name: "inventory",
         path: "/inventory",
         subPages: false,

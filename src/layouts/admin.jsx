@@ -18,7 +18,7 @@ export function Admin() {
             <Sidenav routes={routeToSend} />
             <div className="p-4 xl:ml-80">
                 <DashboardNavbar />
-
+                
                 <div className="bg-white shadow-lg rounded-md px-4">
                     <Routes>
                         {routes.map(

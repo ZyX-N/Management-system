@@ -66,6 +66,7 @@ export function MaterialTailwindControllerProvider({ children }) {
     buyModalData,
     setBuyModalData
   }
+  
 
   return (
     <MaterialTailwind.Provider value={value}>
@@ -77,6 +78,7 @@ export function MaterialTailwindControllerProvider({ children }) {
 export function useContextController() {
   const context = React.useContext(MaterialTailwind);
 
+  
   if (!context) {
     throw new Error(
       "useContextController should be used inside the MaterialTailwindControllerProvider."
