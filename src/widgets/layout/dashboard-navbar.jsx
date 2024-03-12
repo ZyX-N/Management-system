@@ -30,15 +30,16 @@ export function DashboardNavbar() {
         <div className="w-full relative flex justify-between gap-6 lg:items-center">
           <div className="capitalize hidden lg:flex flex-col justify-between items-start pl-5">
             <Breadcrumbs className={"bg-transparent p-0 transition-all mt-1"}>
-              <Link to={`/${layout}`}>
+              {/* <Link to={`/${layout}`}> */}
                 <Typography
                   variant="small"
                   color="blue-gray"
-                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
+                  // className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
+                  className="font-normal opacity-50"
                 >
                   {layout}
                 </Typography>
-              </Link>
+              {/* </Link> */}
               <Typography
                 variant="small"
                 color="blue-gray"
@@ -58,7 +59,7 @@ export function DashboardNavbar() {
             />
             <button
               type="button"
-              className="inline-flex w-full gap-2 flex-row justify-center rounded-md bg-red-600 p-2 text-sm font-semibold text-white hover:bg-red-500 sm:ml-3 sm:w-auto shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] hover:scale-105 transition-all duration-75 whitespace-nowrap md:ml-6"
+              className="inline-flex gap-2 flex-row justify-center rounded-md bg-red-600 p-2 text-sm font-semibold text-white hover:bg-red-500 sm:ml-3 shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] hover:scale-105 transition-all duration-75 whitespace-nowrap md:ml-6"
               onClick={() => {
                 navigate("/admin/sign-in", { replace: false });
               }}
