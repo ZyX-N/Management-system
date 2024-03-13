@@ -89,12 +89,12 @@ export function Role() {
                 <div class="grid grid-cols-1 gap-4">
 
                     {roleList.map((item) => (
-                        <div class="bg-white shadow-lg rounded-lg p-6 flex justify-between" key={item._id}>
-                            <div className="flex flex-col gap-0 w-3/4">
+                        <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row justify-between" key={item._id}>
+                            <div className="flex flex-col gap-0 w-full md:w-3/4">
                                 <h2 class="text-lg font-semibold capitalize">{item.name}</h2>
                                 <p class="text-gray-600">{item.description}</p>
                             </div>
-                            <div class="mt-4 flex justify-end gap-2 w-1/4">
+                            <div class="mt-4 flex md:justify-end gap-2 w-full md:w-1/4">
 
                                 <Tooltip content="Members">
                                     <button class="bg-green-500 text-white rounded-full w-10 h-10 hover:bg-green-600 flex justify-center items-center" >
