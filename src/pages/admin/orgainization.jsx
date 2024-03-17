@@ -153,60 +153,66 @@ export function Origanization() {
           </div>
           :
           <div className="grid grid-cols-1 gap-4">
-            {origanizationList.map((item) => (
-              <div
-                className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row justify-between"
-                key={item.id}
-              >
-                <div className="flex flex-col gap-0 w-full md:w-3/4">
-                  <h2 className="text-lg font-semibold capitalize">
-                    {item.name}
-                  </h2>
-                  <p className="text-gray-600">{item.description}</p>
-                </div>
-                {/* <div className="mt-4 flex md:justify-end gap-2 w-full md:w-1/4"> */}
-                <div className="mt-4 hidden md:justify-end gap-2 w-full md:w-1/4">
-                  {/* <Tooltip content="Members">
+            {origanizationList.length === 0 ?
+              <div className="w-full">
+                  <img src="/static/Images/no-data.jpg" alt="No data" className="mx-auto h-64 w-72" />
+              </div>
+              :
+              origanizationList.map((item) => (
+                <div
+                  className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row justify-between"
+                  key={item.id}
+                >
+                  <div className="flex flex-col gap-0 w-full md:w-3/4">
+                    <h2 className="text-lg font-semibold capitalize">
+                      {item.name}
+                    </h2>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
+                  {/* <div className="mt-4 flex md:justify-end gap-2 w-full md:w-1/4"> */}
+                  <div className="mt-4 hidden md:justify-end gap-2 w-full md:w-1/4">
+                    {/* <Tooltip content="Members">
                                     <button className="bg-green-500 text-white rounded-full w-10 h-10 hover:bg-green-600 flex justify-center items-center" >
                                         <UserIcon className="w-5 h-5 text-white" />
                                     </button>
                                 </Tooltip> */}
 
-                  <Tooltip content="Edit">
-                    <button
-                      className="bg-blue-500 text-white rounded-full w-10 h-10 hover:bg-blue-600 flex justify-center items-center"
-                      onClick={() => {
-                        setEditBoxOpen(true);
-                        setEditData(item);
-                      }}
-                    >
-                      <PencilIcon className="w-5 h-5 text-white" />
-                    </button>
-                  </Tooltip>
+                    <Tooltip content="Edit">
+                      <button
+                        className="bg-blue-500 text-white rounded-full w-10 h-10 hover:bg-blue-600 flex justify-center items-center"
+                        onClick={() => {
+                          setEditBoxOpen(true);
+                          setEditData(item);
+                        }}
+                      >
+                        <PencilIcon className="w-5 h-5 text-white" />
+                      </button>
+                    </Tooltip>
 
-                  <Tooltip content="Delete">
-                    {/* <button className="bg-red-500 text-white rounded-full w-10 h-10 hover:bg-red-600 flex justify-center items-center"
+                    <Tooltip content="Delete">
+                      {/* <button className="bg-red-500 text-white rounded-full w-10 h-10 hover:bg-red-600 flex justify-center items-center"
                                         onClick={() => { deleteOrg(item._id) }}
                                     >
                                         <TrashIcon className="w-5 h-5 text-white" />
                                     </button> */}
-                    <button
-                      className="bg-red-500 text-white rounded-full w-10 h-10 hover:bg-red-600 flex justify-center items-center"
-                      onClick={() => {
-                        window.confirm(
-                          "Are you confirm that you want to delete this."
-                        ) &&
-                          setOriganizationList(
-                            origanizationList.filter((e) => e._id !== item._id)
-                          );
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5 text-white" />
-                    </button>
-                  </Tooltip>
+                      <button
+                        className="bg-red-500 text-white rounded-full w-10 h-10 hover:bg-red-600 flex justify-center items-center"
+                        onClick={() => {
+                          window.confirm(
+                            "Are you confirm that you want to delete this."
+                          ) &&
+                            setOriganizationList(
+                              origanizationList.filter((e) => e._id !== item._id)
+                            );
+                        }}
+                      >
+                        <TrashIcon className="w-5 h-5 text-white" />
+                      </button>
+                    </Tooltip>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            }
           </div>
         }
       </div>

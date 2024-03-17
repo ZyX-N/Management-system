@@ -35,42 +35,42 @@ export function Sidenav({ routes }) {
     >
 
       {/* <Drawer open={sidenavOpen} onClose={closeDrawer}> */}
-        <div className="mb-2 flex items-center justify-between p-4">
-          <Typography variant="h5" color="blue-gray">
-            Admin
-          </Typography>
-          <IconButton variant="text" color="blue-gray" onClick={closeDrawer} className="lg:hidden block">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <List className="gap-2">
+      <div className="mb-2 flex items-center justify-between p-4">
+        <Typography variant="h5" color="blue-gray">
+          Admin
+        </Typography>
+        <IconButton variant="text" color="blue-gray" onClick={closeDrawer} className="lg:hidden block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="h-5 w-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </IconButton>
+      </div>
+      <List className="gap-2">
 
-          {
-            routes.pages.map((item) => (
-              <Link to={`/${routes.layout}${item.path}`} key={item.name}>
+        {
+          routes.pages.map((item) => (
+            <Link to={`/${routes.layout}${item.path}`} key={item.name} onClick={() => setSidenavOpen(false)}>
               <ListItem className="capitalize">
                 <ListItemPrefix>
                   {item.icon}
                 </ListItemPrefix>
                 {item.name}
               </ListItem>
-              </Link>
-            ))
-          }
-          {/* <ListItem>
+            </Link>
+          ))
+        }
+        {/* <ListItem>
             <ListItemPrefix>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@ export function Sidenav({ routes }) {
             Tables
           </ListItem>
            */}
-        </List>
+      </List>
       {/* </Drawer> */}
 
 

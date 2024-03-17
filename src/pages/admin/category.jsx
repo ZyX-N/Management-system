@@ -5,6 +5,7 @@ import { CategoryPopup } from "../../widgets/modals/category";
 import { ButtonCreate } from "../../widgets/button/create";
 import { apiConfig } from "../../configs/connection";
 import { BallTriangleSpinner } from "../../widgets/loader/ballTriangle";
+import { unitListService } from "../../services/unit-list";
 
 const activeStatus = [
   { name: "True", value: true },
@@ -21,8 +22,8 @@ export function Category() {
   const [editBoxOpen, setEditBoxOpen] = React.useState(false);
   const [createBoxOpen, setCreateBoxOpen] = React.useState(false);
 
-  const [unitValue, setUnitValue] = React.useState(0);
-  const [editUnitValue, setEditUnitValue] = React.useState(0);
+  const [unitValue, setUnitValue] = React.useState("");
+  const [editUnitValue, setEditUnitValue] = React.useState("");
   const [activeValue, setActiveValue] = React.useState(activeStatus[0].value);
 
   const [createData, setCreateData] = React.useState({
@@ -41,6 +42,8 @@ export function Category() {
     activeByDefault: true,
     stdUnitId: unitValue,
   });
+
+  const token = localStorage.getItem("accessToken");
 
   const getCategoryList = async () => {
     try {
@@ -71,89 +74,81 @@ export function Category() {
       console.error(error);
     }
     setLoading(false);
-
-
   };
 
   const editHandler = async () => {
     try {
-    const token = localStorage.getItem("accessToken");
-    let headersList = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-    let bodyContent = JSON.stringify(editData);
-    let response = await fetch(`${apiConfig.base_url}/category/template/${editCategoryId}`, {
-      method: "PATCH",
-      body: bodyContent,
-      headers: headersList,
-    });
-
-    if (response.status === 200) {
-      window.alert("Category updated successfully!");
-      getCategoryList();
-      setActiveValue((activeStatus[0].value));
-      setEditData({
-        name: "",
-        description: "",
-        active: true,
-        activeByDefault: true,
-        stdUnitId: unitValue,
+      const token = localStorage.getItem("accessToken");
+      let headersList = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+      let bodyContent = JSON.stringify(editData);
+      let response = await fetch(`${apiConfig.base_url}/category/template/${editCategoryId}`, {
+        method: "PATCH",
+        body: bodyContent,
+        headers: headersList,
       });
-    } else {
-      window.alert("Category updation failed!");
+
+      if (response.status === 200) {
+        window.alert("Category updated successfully!");
+        getCategoryList();
+        setActiveValue((activeStatus[0].value));
+        setEditData({
+          name: "",
+          description: "",
+          active: true,
+          activeByDefault: true,
+          stdUnitId: unitValue,
+        });
+      } else {
+        window.alert("Category updation failed!");
+      }
+
+    } catch (error) {
+      console.error(error);
     }
-    
-  } catch (error) {
-   console.error(error);
-  }
   };
 
   const createHandler = async () => {
     try {
-    const token = localStorage.getItem("accessToken");
-    let headersList = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-    let bodyContent = JSON.stringify(createData);
-    let response = await fetch(`${apiConfig.base_url}/category/template`, {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    });
-
-    if (response.status === 201) {
-      window.alert("New category created!");
-      getCategoryList();
-      setActiveValue((activeStatus[0].value));
-      setCreateData({
-        name: "",
-        description: "",
-        active: true,
-        activeByDefault: true,
-        stdUnitId: unitValue,
+      const token = localStorage.getItem("accessToken");
+      let headersList = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+      let bodyContent = JSON.stringify(createData);
+      let response = await fetch(`${apiConfig.base_url}/category/template`, {
+        method: "POST",
+        body: bodyContent,
+        headers: headersList,
       });
-    } else {
-      window.alert("Category creation failed!");
+
+      if (response.status === 201) {
+        window.alert("New category created!");
+        getCategoryList();
+        setActiveValue((activeStatus[0].value));
+        setCreateData({
+          name: "",
+          description: "",
+          active: true,
+          activeByDefault: true,
+          stdUnitId: unitValue,
+        });
+      } else {
+        window.alert("Category creation failed!");
+      }
+
+    } catch (error) {
+      console.error(error);
     }
-    
-  } catch (error) {
-   console.error(error);   
-  }
   };
 
-  const getUnits = () => {
-    const units = [
-      { id: 1, name: "litre", value: "litre" },
-      { id: 2, name: "kilo_litre", value: "kilo_litre" },
-      { id: 3, name: "meter", value: "meter" },
-      { id: 4, name: "kilo_meter", value: "kilo_meter" },
-      { id: 5, name: "kilo_gram", value: "kilo_gram" },
-      { id: 6, name: "quintal", value: "quintal" },
-      { id: 7, name: "tonne", value: "tonne" }
-    ]
-
+  const getUnits = async () => {
+    let units = await unitListService(token)
+    units = units.map((item) => {
+      return { id: item.id, name: item.name, value: item.name }
+    });
     setUnitList(units);
   }
 
@@ -163,13 +158,13 @@ export function Category() {
   }, []);
 
   React.useMemo(() => {
-    if (unitValue !== 0) {
+    if (unitValue !== "") {
       setCreateData((prev) => ({ ...prev, stdUnitId: unitList.filter((e) => e.name === unitValue)[0].id }));
     }
   }, [unitValue]);
 
   React.useMemo(() => {
-    if (editUnitValue !== 0) {
+    if (editUnitValue !== "") {
       setEditData((prev) => ({ ...prev, stdUnitId: unitList.filter((e) => e.name === editUnitValue)[0]?.id }));
     }
   }, [editUnitValue]);
@@ -180,10 +175,10 @@ export function Category() {
         title={"Edit category"}
         open={editBoxOpen}
         setOpen={setEditBoxOpen}
-        data={{ ...editData, editUnitValue, activeValue }}
+        data={{ ...editData, unitValue: editUnitValue, activeValue }}
         setData={setEditData}
         onSave={editHandler}
-        extra={{ units: unitList, activeStatus, setEditUnitValue, setActiveValue }}
+        extra={{ units: unitList, activeStatus, setUnitValue: setEditUnitValue, setActiveValue }}
       />
 
       <CategoryPopup
@@ -237,54 +232,60 @@ export function Category() {
                           </tr>
                         </thead>
                         <tbody>
-                          {itemList.map((item) => (
-                            <tr
-                              className="border-b border-dashed last:border-b-0"
-                              key={item._id}
-                            >
-                              <td className="py-1 pl-0 max-w-[225px]">
-                                <div className="flex items-center">
-                                  <div className="flex flex-col justify-start">
-                                    <span className="capitalize mb-1 transition-colors duration-200 ease-in-out text-base text-secondary-inverse hover:text-primary">
-                                      {" "}
-                                      {item.name}{" "}
-                                    </span>
+                          {itemList.length === 0 ?
+                            <tr>
+                              <td colSpan={4}>
+                                <img src="/static/Images/no-data.jpg" alt="No data" className="mx-auto h-64 w-72" />
+                              </td>
+                            </tr>
+                            : itemList.map((item) => (
+                              <tr
+                                className="border-b border-dashed last:border-b-0"
+                                key={item.id}
+                              >
+                                <td className="py-1 pl-0 max-w-[225px]">
+                                  <div className="flex items-center">
+                                    <div className="flex flex-col justify-start">
+                                      <span className="capitalize mb-1 transition-colors duration-200 ease-in-out text-base text-secondary-inverse hover:text-primary">
+                                        {" "}
+                                        {item.name}{" "}
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              </td>
-                              <td className="truncate py-1 pr-0 text-start max-w-[225px]">
-                                {item.description}
-                              </td>
-                              <td className="py-1 pr-0 text-center max-w-[200px]">
-                                <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center text-base/none text-success bg-success-light rounded-lg capitalize">
-                                  {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 mr-1">
+                                </td>
+                                <td className="truncate py-1 pr-0 text-start max-w-[225px]">
+                                  {item.description}
+                                </td>
+                                <td className="py-1 pr-0 text-center max-w-[200px]">
+                                  <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center text-base/none text-success bg-success-light rounded-lg capitalize">
+                                    {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 mr-1">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
                                                                 </svg>  */}
-                                  {item.stdUnit.name.split("_").join(" ") || ""}
-                                </span>
-                              </td>
-                              <td className="py-1 text-start max-w-[100px]">
-                                <div className="flex gap-2">
-                                  <Tooltip content="Edit">
-                                    <button
-                                      className="bg-blue-500 text-white size-9 rounded-full hover:bg-blue-600 flex justify-center items-center"
-                                      onClick={() => {
-                                        setEditBoxOpen(true);
-                                        setEditData({
-                                          name: item.name,
-                                          description: item.description,
-                                          active: item.active,
-                                          activeByDefault: item.activeByDefault,
-                                          stdUnitId: item.stdUnitId,
-                                        });
-                                        setEditUnitValue(unitList.filter((e) => e.id === item.stdUnitId)[0]?.name);
-                                        setEditCategoryId(item.id);
-                                      }}
-                                    >
-                                      <PencilIcon className="size-5 text-white" />
-                                    </button>
-                                  </Tooltip>
-                                  {/* <Tooltip content="Delete">
+                                    {item.stdUnit.name.split("_").join(" ") || ""}
+                                  </span>
+                                </td>
+                                <td className="py-1 text-start max-w-[100px]">
+                                  <div className="flex gap-2">
+                                    <Tooltip content="Edit">
+                                      <button
+                                        className="bg-blue-500 text-white size-9 rounded-full hover:bg-blue-600 flex justify-center items-center"
+                                        onClick={() => {
+                                          setEditBoxOpen(true);
+                                          setEditData({
+                                            name: item.name,
+                                            description: item.description,
+                                            active: item.active,
+                                            activeByDefault: item.activeByDefault,
+                                            stdUnitId: item.stdUnitId,
+                                          });
+                                          setEditUnitValue(unitList.filter((e) => e.id === item.stdUnitId)[0]?.name);
+                                          setEditCategoryId(item.id);
+                                        }}
+                                      >
+                                        <PencilIcon className="size-5 text-white" />
+                                      </button>
+                                    </Tooltip>
+                                    {/* <Tooltip content="Delete">
                                   <button
                                     className="bg-red-500 text-white size-9 rounded-full hover:bg-red-600 flex justify-center items-center"
                                     onClick={() => {
@@ -301,10 +302,10 @@ export function Category() {
                                     <TrashIcon className="size-5 text-white" />
                                   </button>
                                 </Tooltip> */}
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>

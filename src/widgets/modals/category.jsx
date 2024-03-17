@@ -57,8 +57,8 @@ export function CategoryPopup({ title, open, setOpen, data, setData, onSave, ext
         <DropdownSimple
           label="Unit"
           options={extra.units}
-          value={data.editUnitValue}
-          setValue={extra.setEditUnitValue}
+          value={data.unitValue}
+          setValue={extra.setUnitValue}
         />
         <DropdownSimple
           label="Active"

@@ -325,83 +325,92 @@ export function Product() {
                           </tr>
                         </thead>
                         <tbody>
-                          {itemList.map((item) => (
-                            <tr
-                              className="border-b border-dashed last:border-b-0"
-                              key={item.id}
-                            >
-                              <td className="py-1 pl-0 max-w-[225px]">
-                                <div className="flex items-center">
-                                  <div className="flex flex-col justify-start">
-                                    <span className="capitalize mb-1 transition-colors duration-200 ease-in-out text-base text-secondary-inverse hover:text-primary">
-                                      {" "}
-                                      {item.name}{" "}
+                          {
+                            itemList.length === 0 ?
+                              <tr>
+                                <td colSpan={5}>
+                                  <img src="/static/Images/no-data.jpg" alt="No data" className="mx-auto h-64 w-72" />
+                                </td>
+                              </tr>
+                              :
+                              itemList.map((item) => (
+                                <tr
+                                  className="border-b border-dashed last:border-b-0"
+                                  key={item.id}
+                                >
+                                  <td className="py-1 pl-0 max-w-[225px]">
+                                    <div className="flex items-center">
+                                      <div className="flex flex-col justify-start">
+                                        <span className="capitalize mb-1 transition-colors duration-200 ease-in-out text-base text-secondary-inverse hover:text-primary">
+                                          {" "}
+                                          {item.name}{" "}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="truncate py-1 pr-0 text-start max-w-[225px]">
+                                    {item.description}
+                                  </td>
+                                  <td className="py-1 pr-0 text-center max-w-[200px]">
+                                    <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center text-base/none text-success bg-success-light rounded-lg">
+                                      {item.quantity || "N/A"}
                                     </span>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="truncate py-1 pr-0 text-start max-w-[225px]">
-                                {item.description}
-                              </td>
-                              <td className="py-1 pr-0 text-center max-w-[200px]">
-                                <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center text-base/none text-success bg-success-light rounded-lg">
-                                  {item.quantity || "N/A"}
-                                </span>
-                              </td>
-                              <td className="py-1 pr-0 text-center max-w-[200px]">
-                                <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center text-base/none text-success bg-success-light rounded-lg capitalize">
-                                  {item.stdUnitId ? unitList.filter((e) => e.id === item.stdUnitId)[0].name.split("_").join(" ") : "N/A"}
-                                </span>
-                              </td>
-                              <td className="py-1 text-start max-w-[100px]">
-                                <div className="flex gap-2">
-                                  <Tooltip content="Edit">
-                                    <button
-                                      className="bg-blue-500 text-white size-9 rounded-full hover:bg-blue-600 flex justify-center items-center"
-                                      onClick={() => {
-                                        setEditBoxOpen(true);
-                                        setEditCategoryId(item.id);
-                                        setEditData({
-                                          name: item.name,
-                                          minStockCount: item.minStockCount,
-                                          description: item.description,
-                                          stdUnitId: item.stdUnitId,
-                                          quantity: item.quantity || 0,
-                                          minStockCount: item.minStockCount,
-                                          categoryTemplateId: item.categoryTemplateId,
-                                          stockTypeId: item.stockTypeId
-                                        });
-                                        setEditUnitValue(unitList.filter((e) => e.id === item.stdUnitId)[0]?.name);
-                                        setCategoryValue(categoryList.filter((e) => e.id === item.categoryTemplateId)[0]?.name);
-                                      }}
-                                    >
-                                      <PencilIcon className="size-5 text-white" />
-                                    </button>
-                                  </Tooltip>
-                                  <Tooltip content="Delete">
-                                    {/* <button className="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 flex justify-center items-center" onClick={() => { deleteMember(item._id) }}>
+                                  </td>
+                                  <td className="py-1 pr-0 text-center max-w-[200px]">
+                                    <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center text-base/none text-success bg-success-light rounded-lg capitalize">
+                                      {item.stdUnitId ? unitList.filter((e) => e.id === item.stdUnitId)[0].name.split("_").join(" ") : "N/A"}
+                                    </span>
+                                  </td>
+                                  <td className="py-1 text-start max-w-[100px]">
+                                    <div className="flex gap-2">
+                                      <Tooltip content="Edit">
+                                        <button
+                                          className="bg-blue-500 text-white size-9 rounded-full hover:bg-blue-600 flex justify-center items-center"
+                                          onClick={() => {
+                                            setEditBoxOpen(true);
+                                            setEditCategoryId(item.id);
+                                            setEditData({
+                                              name: item.name,
+                                              minStockCount: item.minStockCount,
+                                              description: item.description,
+                                              stdUnitId: item.stdUnitId,
+                                              quantity: item.quantity || 0,
+                                              minStockCount: item.minStockCount,
+                                              categoryTemplateId: item.categoryTemplateId,
+                                              stockTypeId: item.stockTypeId
+                                            });
+                                            setEditUnitValue(unitList.filter((e) => e.id === item.stdUnitId)[0]?.name);
+                                            setCategoryValue(categoryList.filter((e) => e.id === item.categoryTemplateId)[0]?.name);
+                                          }}
+                                        >
+                                          <PencilIcon className="size-5 text-white" />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip content="Delete">
+                                        {/* <button className="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 flex justify-center items-center" onClick={() => { deleteMember(item._id) }}>
                                                                         <TrashIcon className="w-5 h-5 text-white" />
                                                                     </button> */}
-                                    <button
-                                      className="bg-red-500 text-white size-9 rounded-full hover:bg-red-600 flex justify-center items-center"
-                                      onClick={() => {
-                                        window.confirm(
-                                          "Are you confirm that you want to delete this."
-                                        ) &&
-                                          setItemList(
-                                            itemList.filter(
-                                              (e) => e._id !== item._id
-                                            )
-                                          );
-                                      }}
-                                    >
-                                      <TrashIcon className="size-5 text-white" />
-                                    </button>
-                                  </Tooltip>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                                        <button
+                                          className="bg-red-500 text-white size-9 rounded-full hover:bg-red-600 flex justify-center items-center"
+                                          onClick={() => {
+                                            window.confirm(
+                                              "Are you confirm that you want to delete this."
+                                            ) &&
+                                              setItemList(
+                                                itemList.filter(
+                                                  (e) => e._id !== item._id
+                                                )
+                                              );
+                                          }}
+                                        >
+                                          <TrashIcon className="size-5 text-white" />
+                                        </button>
+                                      </Tooltip>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))
+                          }
                         </tbody>
                       </table>
                     </div>
