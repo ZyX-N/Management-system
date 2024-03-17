@@ -3,8 +3,21 @@ import {
   ChartBarIcon,
   UserIcon,
   HomeModernIcon,
+  BellIcon,
+  ClipboardDocumentListIcon,
 } from "@heroicons/react/24/solid";
-import { Dashboard, Inventory, Member, Role, SignIn } from "./pages/admin";
+import { SiAwsorganizations } from "react-icons/si";
+import { GiOrganigram } from "react-icons/gi";
+import {
+  Dashboard,
+  Inventory,
+  Member,
+  Origanization,
+  Role,
+  SignIn,
+} from "./pages/admin";
+import Category from "./pages/admin/category";
+import { Product } from "./pages/admin/product";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -22,38 +35,51 @@ export const routes = [
         element: <Dashboard />,
       },
       {
-        icon: <ChartBarIcon {...icon} />,
-        name: "role",
-        path: "/role",
+        icon: <GiOrganigram {...icon} />,
+        name: "origanization",
+        path: "/origanization",
         subPages: false,
-        element: <Role />,
+        element: <Origanization />,
       },
+      // {
+      //   icon: <UserIcon {...icon} />,
+      //   name: "member",
+      //   path: "/member",
+      //   subPages: false,
+      //   element: <Member />,
+      // },
       {
-        icon: <UserIcon {...icon} />,
-        name: "member",
-        path: "/member",
+        icon: <ClipboardDocumentListIcon {...icon} />,
+        name: "category",
+        path: "/category",
         subPages: false,
-        element: <Member />,
+        element: <Category />,
       },
       {
         icon: <HomeModernIcon {...icon} />,
-        name: "inventory",
-        path: "/inventory",
+        name: "products",
+        path: "/products",
         subPages: false,
-        element: <Inventory />,
+        element: <Product />,
+      },
+      // {
+      //   icon: <ClipboardDocumentListIcon {...icon} />,
+      //   name: "orders",
+      //   path: "/order",
+      //   subPages: false,
+      //   // element: <Inventory />,
+      //   element: <div>Orders</div>,
+      // },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "notification",
+        path: "/notification",
+        subPages: false,
+        // element: <Inventory />,
+        element: <div>Notification</div>,
       },
     ],
-    auth:[
-      {
-        icon: <HomeIcon {...icon} />,
-        name: "sign in",
-        path: "/sign-in",
-        subPages: false,
-        element: <SignIn />,
-      },
-    ]
   },
-
 ];
 
 export default routes;

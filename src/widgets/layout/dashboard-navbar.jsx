@@ -61,6 +61,7 @@ export function DashboardNavbar() {
               type="button"
               className="inline-flex gap-2 flex-row justify-center rounded-md bg-red-600 p-2 text-sm font-semibold text-white hover:bg-red-500 sm:ml-3 shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] hover:scale-105 transition-all duration-75 whitespace-nowrap md:ml-6"
               onClick={() => {
+                localStorage.clear("accessToken");
                 navigate("/admin/sign-in", { replace: false });
               }}
             >

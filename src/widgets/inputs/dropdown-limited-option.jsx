@@ -1,7 +1,6 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 
-export function DropdownSimple({ label, options, value, setValue, size, mode }) {
+export function DropdownSimple({ label, options, value, setValue, size, mode, onChange }) {
 
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [sizeState] = useState(size ? size : "md");
@@ -45,8 +44,9 @@ export function DropdownSimple({ label, options, value, setValue, size, mode }) 
 
         <div className="relative">
           <div className={`${getHeight(sizeState)} bg-white flex border-[1.5px] border-gray-400 rounded-[4px] items-center`}>
-            <input value={value} name="select" id="select" className={`px-4 appearance-none outline-none text-gray-800 w-full cursor-pointer`} onClick={() => setDropDownOpen(true)}
+            <input value={value} name="select" id="select" className={`px-2 appearance-none outline-none text-gray-800 w-full cursor-pointer capitalize`} onClick={() => setDropDownOpen(true)}
               onChange={() => { setValue(value) }}
+              // onChange={onChange ? onChange :(e) => { setValue(value) }}
             />
 
             <button type="button" className={`cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-gray-600 duration-300 ${dropDownOpen ? "rotate-0" : "rotate-180"}`} onClick={() => {
@@ -80,5 +80,3 @@ export function DropdownSimple({ label, options, value, setValue, size, mode }) 
     </div>
   );
 }
-
-export default DropdownSimple;
