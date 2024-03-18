@@ -164,6 +164,10 @@ export function Product() {
 
   const createHandler = async () => {
     try {
+      console.log(createData);
+      if (createData.categoryTemplateId === 0) {
+        return window.alert("Invalid category id!");
+      }
       const token = localStorage.getItem("accessToken");
       let headersList = {
         Authorization: `Bearer ${token}`,

@@ -39,14 +39,13 @@ export function DropdownSimple({ label, options, value, setValue, size, mode, on
 
   return (
     <div className="bg-transparent">
-      <div className="max-w-md mx-auto">
+      <div className="w-full mx-auto">
         <label htmlFor="select" className={`${getFontSize(sizeState)} ${modeState === "light" ? "text-gray-800" : "text-white"} font-semibold block py-1 pl-1`}>{label}</label>
 
         <div className="relative">
           <div className={`${getHeight(sizeState)} bg-white flex border-[1.5px] border-gray-400 rounded-[4px] items-center`}>
             <input value={value} name="select" id="select" className={`px-2 appearance-none outline-none text-gray-800 w-full cursor-pointer capitalize`} onClick={() => setDropDownOpen(true)}
               onChange={() => { setValue(value) }}
-              // onChange={onChange ? onChange :(e) => { setValue(value) }}
             />
 
             <button type="button" className={`cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-gray-600 duration-300 ${dropDownOpen ? "rotate-0" : "rotate-180"}`} onClick={() => {
@@ -60,7 +59,7 @@ export function DropdownSimple({ label, options, value, setValue, size, mode, on
           </div>
 
           {dropDownOpen &&
-            <div className="absolute rounded-md shadow bg-white overflow-hidden flex flex-col w-full mt-1 border border-gray-200 z-40">
+            <div className="absolute rounded-md shadow bg-white flex flex-col w-full mt-1 border border-gray-200 z-40 overflow-y-auto max-h-[calc(37px*5)]">
               {
                 options?.map((item, idx) => (
                   <div className={`cursor-pointer group ${idx !== 0 ? "border-t" : ""}`}>
