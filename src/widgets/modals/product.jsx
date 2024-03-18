@@ -54,7 +54,7 @@ export function ProductPopup({ title, open, setOpen, data, setData, onSave, extr
                     value={data.categoryValue}
                     setValue={extra.setCategoryValue}
                 />
-                <TextboxSimple
+                {/* <TextboxSimple
                     type="number"
                     label="Quantity"
                     value={data.quantity}
@@ -63,7 +63,7 @@ export function ProductPopup({ title, open, setOpen, data, setData, onSave, extr
                     }}
                     size="sm"
                     width="w-full"
-                />
+                /> */}
                 <DropdownSimple
                     label="Unit"
                     size="sm"

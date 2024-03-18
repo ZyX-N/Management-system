@@ -14,6 +14,8 @@ const activeStatus = [
 
 export function Category() {
 
+  const token = localStorage.getItem("accessToken");
+
   const [loading, setLoading] = React.useState(true);
 
   const [itemList, setItemList] = React.useState([]);
@@ -42,8 +44,6 @@ export function Category() {
     activeByDefault: true,
     stdUnitId: unitValue,
   });
-
-  const token = localStorage.getItem("accessToken");
 
   const getCategoryList = async () => {
     try {

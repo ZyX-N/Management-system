@@ -5,6 +5,7 @@ import { ButtonCreate } from "../../widgets/button/create";
 import { apiConfig } from "../../configs/connection";
 import { ProductPopup } from "../../widgets/modals/product";
 import { BallTriangleSpinner } from "../../widgets/loader/ballTriangle";
+import { unitListService } from "../../services/unit-list";
 
 const activeStatus = [
   { name: "True", value: true },
@@ -12,6 +13,7 @@ const activeStatus = [
 ];
 
 export function Product() {
+  const token = localStorage.getItem("accessToken");
 
   const [loading, setLoading] = React.useState(true);
 
@@ -83,17 +85,11 @@ export function Product() {
     setLoading(false);
   };
 
-  const getUnits = () => {
-    const units = [
-      { id: 1, name: "litre", value: "litre" },
-      { id: 2, name: "kilo_litre", value: "kilo_litre" },
-      { id: 3, name: "meter", value: "meter" },
-      { id: 4, name: "kilo_meter", value: "kilo_meter" },
-      { id: 5, name: "kilo_gram", value: "kilo_gram" },
-      { id: 6, name: "quintal", value: "quintal" },
-      { id: 7, name: "tonne", value: "tonne" }
-    ]
-
+  const getUnits = async () => {
+    let units = await unitListService(token)
+    units = units.map((item) => {
+      return { id: item.id, name: item.name, value: item.name }
+    });
     setUnitList(units);
   }
 
@@ -125,28 +121,6 @@ export function Product() {
       console.error(error);
     }
   };
-
-  // const deleteMember = async (id) => {
-  //   let headersList = {
-  //     Authorization:
-  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRiNTRkZGFkOGE0ZDA1OWU5NTZhYmYiLCJpYXQiOjE3MDkxMjUwOTksImV4cCI6MTcwOTIxMTQ5OX0.7pW55WQ6RJRRWZpA2CzJ5fLH8dgxrGHWi_ZwnAB6TXs",
-  //   };
-
-  //   let response = await fetch(
-  //     `http://localhost:3501/api/admin/user/delete/${id}`,
-  //     {
-  //       method: "DELETE",
-  //       headers: headersList,
-  //     }
-  //   );
-
-  //   let data = await response.json();
-
-  //   if (data.status) {
-  //     // getMemberList();
-  //   }
-  //   window.alert(data.msg);
-  // };
 
   const editHandler = async () => {
     try {
