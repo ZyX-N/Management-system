@@ -44,7 +44,7 @@ export function Admin() {
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav routes={routeToSend} />
-      <div className="p-4 xl:ml-80">
+      <div className="p-4 lg:ml-80">
         <DashboardNavbar />
 
         <div className="bg-white shadow-lg rounded-md px-4">
@@ -62,5 +62,3 @@ export function Admin() {
     </div>
   );
 }
-
-export default Admin;

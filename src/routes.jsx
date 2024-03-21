@@ -10,12 +10,9 @@ import { SiAwsorganizations } from "react-icons/si";
 import { GiOrganigram } from "react-icons/gi";
 import {
   Dashboard,
-  Inventory,
   Member,
   Notifications,
   Origanization,
-  Role,
-  SignIn,
 } from "./pages/admin";
 import Category from "./pages/admin/category";
 import { Product } from "./pages/admin/product";
@@ -42,13 +39,13 @@ export const routes = [
         subPages: false,
         element: <Origanization />,
       },
-      // {
-      //   icon: <UserIcon {...icon} />,
-      //   name: "member",
-      //   path: "/member",
-      //   subPages: false,
-      //   element: <Member />,
-      // },
+      {
+        icon: <UserIcon {...icon} />,
+        name: "member",
+        path: "/member",
+        subPages: false,
+        element: <Member />,
+      },
       {
         icon: <ClipboardDocumentListIcon {...icon} />,
         name: "category",
@@ -63,14 +60,6 @@ export const routes = [
         subPages: false,
         element: <Product />,
       },
-      // {
-      //   icon: <ClipboardDocumentListIcon {...icon} />,
-      //   name: "orders",
-      //   path: "/order",
-      //   subPages: false,
-      //   // element: <Inventory />,
-      //   element: <div>Orders</div>,
-      // },
       {
         icon: <BellIcon {...icon} />,
         name: "notification",

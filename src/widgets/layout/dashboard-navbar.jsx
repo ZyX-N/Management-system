@@ -13,10 +13,6 @@ export function DashboardNavbar() {
 
   const { setSidenavOpen } = useContextController();
 
-  window.addEventListener("resize", () => {
-    window.innerWidth > 960 && setSidenavOpen(false);
-  });
-
   return (
     <div className="flex flex-col gap-4">
       <Navbar

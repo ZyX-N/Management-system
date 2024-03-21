@@ -22,19 +22,12 @@ export function Sidenav({ routes }) {
     transparent: "bg-transparent",
   };
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 960) {
-      setSidenavOpen(true);
-    }
-  });
-
   return (
     <aside
       className={`${sidenavTypes['white']} ${sidenavOpen ? "translate-x-0" : "-translate-x-80"
-        } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
+        } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 transition-transform duration-300 lg:translate-x-0 border border-blue-gray-100`}
     >
 
-      {/* <Drawer open={sidenavOpen} onClose={closeDrawer}> */}
       <div className="mb-2 flex items-center justify-between p-4">
         <Typography variant="h5" color="blue-gray">
           Admin
