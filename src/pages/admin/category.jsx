@@ -6,6 +6,7 @@ import { ButtonCreate } from "../../widgets/button/create";
 import { apiConfig } from "../../configs/connection";
 import { BallTriangleSpinner } from "../../widgets/loader/ballTriangle";
 import { unitListService } from "../../services/unit-list";
+import { categoryTemplateListService } from "../../services/category-template-list";
 
 const activeStatus = [
   { name: "True", value: true },
@@ -46,33 +47,9 @@ export function Category() {
   });
 
   const getCategoryList = async () => {
-    try {
-      const token = localStorage.getItem("accessToken");
-      let headersList = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      //    let response = await fetch(`${apiConfig.base_url}/category/template/list?includeInactive=true&skip=0&limit=30`, {
-      let response = await fetch(
-        `${apiConfig.base_url}/category/template/list?includeInactive=true`,
-        {
-          method: "GET",
-          headers: headersList,
-        }
-      );
-
-      let data = await response.json();
-
-      if (response.status === 200) {
-        setItemList(data);
-      } else {
-        setItemList([]);
-      }
-
-    } catch (error) {
-      setItemList([]);
-      console.error(error);
-    }
+    const token = localStorage.getItem("accessToken");
+    let categoryTemplateListStatus = await categoryTemplateListService(token);
+    setItemList(categoryTemplateListStatus);
     setLoading(false);
   };
 
@@ -128,6 +105,7 @@ export function Category() {
         window.alert("New category created!");
         getCategoryList();
         setActiveValue((activeStatus[0].value));
+        setUnitValue("");
         setCreateData({
           name: "",
           description: "",

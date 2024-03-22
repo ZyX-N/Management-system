@@ -3,6 +3,7 @@ import { Tooltip } from "@material-tailwind/react";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { ButtonCreate } from "../../widgets/button/create";
 import { ProductPopup } from "../../widgets/modals/product";
+import { addMemberService } from "../../services/sign-up";
 
 const activeStatus = [
   { name: "True", value: true },
@@ -15,14 +16,15 @@ export function Member() {
     middleName: "",
     lastName: "",
     email: "",
-    phoneNumber: "",
+    // phoneNumber: "",
     password: "",
     orgId: 0,
   });
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log(data);
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    const status = await addMemberService(data);
+    console.log(status);
   };
 
   return (
@@ -129,7 +131,7 @@ export function Member() {
                         }}
                       />
                     </div>
-                    <div class="mb-4">
+                    {/* <div class="mb-4">
                       <label
                         for="phoneNumber"
                         class="block text-sm font-medium text-gray-700"
@@ -150,7 +152,7 @@ export function Member() {
                           }));
                         }}
                       />
-                    </div>
+                    </div> */}
                     <div class="mb-4">
                       <label
                         for="password"

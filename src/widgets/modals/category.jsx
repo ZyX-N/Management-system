@@ -28,7 +28,7 @@ export function CategoryPopup({ title, open, setOpen, data, setData, onSave, ext
         <UserCircleIcon className="w-9 h-9 text-blue-700 bg-blue-200 rounded-full p-0.5 mr-2" />
         {title}
       </DialogHeader>
-      <DialogBody className="flex flex-col gap-3 pt-0">
+      <DialogBody className="flex flex-col gap-1 pt-0">
         <TextboxSimple
           label="Name"
           value={data.name}
@@ -56,12 +56,14 @@ export function CategoryPopup({ title, open, setOpen, data, setData, onSave, ext
         /> */}
         <DropdownSimple
           label="Unit"
+          size="sm"
           options={extra.units}
           value={data.unitValue}
           setValue={extra.setUnitValue}
         />
         <DropdownSimple
           label="Active"
+          size="sm"
           options={extra.activeStatus}
           value={data.activeValue}
           setValue={extra.setActiveValue}

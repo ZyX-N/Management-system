@@ -5,6 +5,7 @@ import { EditOrg } from "../../widgets/modals/editOrg";
 import { ButtonCreate } from "../../widgets/button/create";
 import { apiConfig } from "../../configs/connection";
 import { BallTriangleSpinner } from "../../widgets/loader/ballTriangle";
+import { createOrgService } from "../../services/create-org";
 // import { Link } from "react-router-dom";
 
 export function Origanization() {
@@ -15,11 +16,11 @@ export function Origanization() {
   const [editBoxOpen, setEditBoxOpen] = React.useState(false);
   const [createBoxOpen, setCreateBoxOpen] = React.useState(false);
   const [editData, setEditData] = React.useState({});
-  const [createData, setCreateData] = React.useState({});
 
   const [orgInfo, setOrgInfo] = React.useState({
     name: "",
     description: "",
+    parentId: 1
   });
 
   const getOrgList = async () => {
@@ -75,35 +76,25 @@ export function Origanization() {
 
   const createHandler = async () => {
     try {
+      const token = localStorage.getItem("accessToken") || "";
+      let orgStatus = await createOrgService(token, orgInfo);
 
-      const token = localStorage.getItem("accessToken");
-      let headersList = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      };
-
-      let bodyContent = JSON.stringify({
-        name: orgInfo.name,
-        description: orgInfo.description,
-        parentId: 1,
-      });
-
-      let response = await fetch(`${apiConfig.base_url}/organization`, {
-        method: "POST",
-        body: bodyContent,
-        headers: headersList,
-      });
-
-      if (response.status === 201) {
+      if (typeof orgStatus === 'boolean' && orgStatus) {
         getOrgList();
+        setOrgInfo({
+          name: "",
+          description: "",
+          parentId: 1
+        })
         window.alert("Organization created!");
       } else {
         window.alert("Organization creation failed!");
       }
 
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
+
   };
 
   // const editHandler = (data) => {
@@ -155,7 +146,7 @@ export function Origanization() {
           <div className="grid grid-cols-1 gap-4">
             {origanizationList.length === 0 ?
               <div className="w-full">
-                  <img src="/static/Images/no-data.jpg" alt="No data" className="mx-auto h-64 w-72" />
+                <img src="/static/Images/no-data.jpg" alt="No data" className="mx-auto h-64 w-72" />
               </div>
               :
               origanizationList.map((item) => (
@@ -169,13 +160,13 @@ export function Origanization() {
                     </h2>
                     <p className="text-gray-600">{item.description}</p>
                   </div>
-                  {/* <div className="mt-4 flex md:justify-end gap-2 w-full md:w-1/4"> */}
-                  <div className="mt-4 hidden md:justify-end gap-2 w-full md:w-1/4">
-                    {/* <Tooltip content="Members">
-                                    <button className="bg-green-500 text-white rounded-full w-10 h-10 hover:bg-green-600 flex justify-center items-center" >
-                                        <UserIcon className="w-5 h-5 text-white" />
-                                    </button>
-                                </Tooltip> */}
+
+                  {/* <div className="mt-4 md:justify-end gap-2 w-full md:w-1/4">
+                    <Tooltip content="Members">
+                      <button className="bg-green-500 text-white rounded-full w-10 h-10 hover:bg-green-600 flex justify-center items-center" >
+                        <UserIcon className="w-5 h-5 text-white" />
+                      </button>
+                    </Tooltip>
 
                     <Tooltip content="Edit">
                       <button
@@ -190,11 +181,6 @@ export function Origanization() {
                     </Tooltip>
 
                     <Tooltip content="Delete">
-                      {/* <button className="bg-red-500 text-white rounded-full w-10 h-10 hover:bg-red-600 flex justify-center items-center"
-                                        onClick={() => { deleteOrg(item._id) }}
-                                    >
-                                        <TrashIcon className="w-5 h-5 text-white" />
-                                    </button> */}
                       <button
                         className="bg-red-500 text-white rounded-full w-10 h-10 hover:bg-red-600 flex justify-center items-center"
                         onClick={() => {
@@ -209,7 +195,7 @@ export function Origanization() {
                         <TrashIcon className="w-5 h-5 text-white" />
                       </button>
                     </Tooltip>
-                  </div>
+                  </div> */}
                 </div>
               ))
             }
