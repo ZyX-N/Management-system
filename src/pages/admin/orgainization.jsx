@@ -20,7 +20,7 @@ export function Origanization() {
   const [orgInfo, setOrgInfo] = React.useState({
     name: "",
     description: "",
-    parentId: 1
+    parentId: 2
   });
 
   const getOrgList = async () => {

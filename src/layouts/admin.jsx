@@ -38,7 +38,7 @@ export function Admin() {
   };
 
   React.useEffect(() => {
-    // checkLogin();
+    checkLogin();
   }, []);
 
   return (

@@ -16,7 +16,7 @@ export function Member() {
     middleName: "",
     lastName: "",
     email: "",
-    // phoneNumber: "",
+    phoneNumber: "",
     password: "",
     orgId: 0,
   });
@@ -131,7 +131,7 @@ export function Member() {
                         }}
                       />
                     </div>
-                    {/* <div class="mb-4">
+                    <div class="mb-4">
                       <label
                         for="phoneNumber"
                         class="block text-sm font-medium text-gray-700"
@@ -152,7 +152,7 @@ export function Member() {
                           }));
                         }}
                       />
-                    </div> */}
+                    </div>
                     <div class="mb-4">
                       <label
                         for="password"
